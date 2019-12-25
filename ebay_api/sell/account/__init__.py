@@ -1,4 +1,4 @@
-from .account import GetPrivileges  # noqa: F401
+from .base import GetPrivileges  # noqa: F401
 from .fulfillment_policy import (  # noqa: F401
     CreateFulfillmentPolicy,
     DeleteFulfillmentPolicy,

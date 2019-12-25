@@ -1,4 +1,4 @@
-from ebay.api.core.base_api import EbayAPI
+from ..base_api import EbayAPI
 
 
 class CommerceAPI(EbayAPI):

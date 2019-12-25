@@ -88,11 +88,14 @@ class BulkCreateOrReplaceInventoryItem(BulkInventoryItemAPI):
     def error_handler(self, response):
         message = ''
         objects = response.json()
-        for error_num, error in enumerate(objects['responses']):
-            errors = error.get('errors', [])
-            if errors:
-                message += f'{error_num+1}) {errors[0]["message"]} (SKU: {error["sku"]})\n'
-        return message, objects
+        if objects.get('responses', None):
+            for error_num, error in enumerate(objects['responses']):
+                errors = error.get('errors', [])
+                if errors:
+                    message += f'{error_num+1}) {errors[0]["message"]} (SKU: {error["sku"]})\n'
+            return message, objects
+        else:
+            return super().error_handler(response=response)
 
 
 class BulkGetInventoryItem(BulkInventoryItemAPI):
