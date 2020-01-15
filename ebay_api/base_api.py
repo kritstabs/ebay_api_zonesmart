@@ -148,7 +148,9 @@ class EbayAPI(ABC):
 
             clean_method = getattr(self, f'clean_{param}', None)
             if clean_method:
-                param_is_valid, value, err_message = clean_method(value.strip())
+		if isinstance(value, str):
+		    value = value.strip()
+                param_is_valid, value, err_message = clean_method(value)
                 if not param_is_valid:
                     message = f'Недопустимое значение параметра запроса ({param}={value}).\n{err_message}'
                     logging.error(message)
@@ -250,7 +252,7 @@ class EbayAPI(ABC):
         return message, objects
 
     @staticmethod
-    def _clean_int(name, value, max_num, min_num):
+    def _clean_int(name, value, min_num, max_num):
         is_valid = True
         message = ''
         try:
