@@ -6,5 +6,10 @@ class AccountAPI(SellAPI):
 
 
 class GetPrivileges(AccountAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/account/resources/privilege/methods/getPrivileges
+    """
+
     resource = "privilege"
     method_type = "GET"

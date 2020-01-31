@@ -10,8 +10,18 @@ class DeveloperAPI(EbayAPI):
 
 
 class GetAppRateLimits(DeveloperAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
+    """
+
     resource = "rate_limit"
 
 
 class GetUserRateLimits(DeveloperAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/developer/analytics/resources/user_rate_limit/methods/getUserRateLimits
+    """
+
     resource = "user_rate_limit"

@@ -13,19 +13,37 @@ class PaymentDisputeAPI(FulfillmentAPI):
 
 
 class GetPaymentDispute(PaymentDisputeAPI):
-    pass
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDispute
+    """
 
 
 class FetchEvidenceContent(PaymentDisputeAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/fetchEvidenceContent
+    """
+
     required_query_params = ["evidence_id", "file_id"]
     url_postfix = "fetch_evidence_content"
 
 
 class GetActivities(PaymentDisputeAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/getActivities
+    """
+
     url_postfix = "activity"
 
 
 class GetPaymentDisputeSummaries(FulfillmentAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDisputeSummaries
+    """
+
     api_location_domain = "apiz"
     resource = ""
     method_type = "GET"

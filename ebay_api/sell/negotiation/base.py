@@ -7,6 +7,11 @@ class NegotiationAPI(SellAPI):
 
 
 class FindEligibleItems(NegotiationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/negotiation/resources/offer/methods/findEligibleItems
+    """
+
     method_type = "GET"
     url_postfix = "find_eligible_items"
     allowed_query_params = ["limit", "offset"]
@@ -16,5 +21,10 @@ class FindEligibleItems(NegotiationAPI):
 
 
 class SendOfferToInterestedBuyers(NegotiationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/negotiation/resources/offer/methods/sendOfferToInterestedBuyers
+    """
+
     method_type = "POST"
     url_postfix = "send_offer_to_interested_buyers"

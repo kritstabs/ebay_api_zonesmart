@@ -8,6 +8,11 @@ class OfferAPI(InventoryAPI):
 
 
 class CreateOffer(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/createOffer
+    """
+
     method_type = "POST"
 
     def get_success_message(self):
@@ -20,11 +25,21 @@ class CreateOffer(OfferAPI):
 
 
 class UpdateOffer(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/updateOffer
+    """
+
     method_type = "PUT"
     required_path_params = ["offerId"]
 
 
 class GetOffers(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/getOffers
+    """
+
     method_type = "GET"
     required_query_params = ["sku"]
     allowed_query_params = ["marketplace_id", "offset", "limit"]
@@ -40,11 +55,21 @@ class GetOffers(OfferAPI):
 
 
 class GetOffer(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/getOffer
+    """
+
     method_type = "GET"
     required_path_params = ["offerId"]
 
 
 class DeleteOffer(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/deleteOffer
+    """
+
     method_type = "DELETE"
     required_path_params = ["offerId"]
 
@@ -58,6 +83,11 @@ class DeleteOffer(OfferAPI):
 
 
 class PublishOffer(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/publishOffer
+    """
+
     method_type = "POST"
     required_path_params = ["offerId"]
     url_postfix = "publish"
@@ -72,12 +102,22 @@ class PublishOffer(OfferAPI):
 
 
 class WithdrawOffer(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/withdrawOffer
+    """
+
     method_type = "POST"
     required_path_params = ["offerId"]
     url_postfix = "withdraw"
 
 
 class GetListingFees(OfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/getListingFees
+    """
+
     method_type = "POST"
     url_postfix = "get_listing_fees"
 
@@ -101,6 +141,11 @@ class BulkOfferAPI(InventoryAPI):
 
 
 class BulkCreateOffer(BulkOfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/bulkCreateOffer
+    """
+
     method_type = "POST"
     url_postfix = "bulk_create_offer"
 
@@ -112,6 +157,11 @@ class BulkCreateOffer(BulkOfferAPI):
 
 
 class BulkPublishOffer(BulkOfferAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/bulkPublishOffer
+    """
+
     method_type = "POST"
     url_postfix = "bulk_publish_offer"
 

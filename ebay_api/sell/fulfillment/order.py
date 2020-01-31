@@ -8,11 +8,21 @@ class OrderAPI(FulfillmentAPI):
 
 
 class GetOrder(OrderAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/order/methods/getOrder
+    """
+
     method_type = "GET"
     required_path_params = ["orderId"]
 
 
 class GetOrders(OrderAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/order/methods/getOrders
+    """
+
     method_type = "GET"
     allowed_query_params = ["orderIds", "filter", "offset", "limit"]
 
@@ -101,6 +111,11 @@ class GetOrders(OrderAPI):
 
 
 class IssueRefund(OrderAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/fulfillment/resources/order/methods/issueRefund
+    """
+
     method_type = "POST"
     required_path_params = ["orderId"]
     url_postfix = "issue_refund"

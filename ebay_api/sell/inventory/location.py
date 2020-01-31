@@ -6,6 +6,11 @@ class LocationAPI(InventoryAPI):
 
 
 class CreateInventoryLocation(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/createInventoryLocation
+    """
+
     method_type = "POST"
     required_path_params = ["merchantLocationKey"]
 
@@ -17,6 +22,11 @@ class CreateInventoryLocation(LocationAPI):
 
 
 class DeleteInventoryLocation(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/deleteInventoryLocation
+    """
+
     method_type = "DELETE"
     required_path_params = ["merchantLocationKey"]
 
@@ -28,23 +38,43 @@ class DeleteInventoryLocation(LocationAPI):
 
 
 class DisableInventoryLocation(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/disableInventoryLocation
+    """
+
     method_type = "POST"
     url_postfix = "disable"
     required_path_params = ["merchantLocationKey"]
 
 
 class EnableInventoryLocation(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/enableInventoryLocation
+    """
+
     method_type = "POST"
     url_postfix = "enable"
     required_path_params = ["merchantLocationKey"]
 
 
 class GetInventoryLocation(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/getInventoryLocation
+    """
+
     method_type = "GET"
     required_path_params = ["merchantLocationKey"]
 
 
 class GetInventoryLocations(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/getInventoryLocations
+    """
+
     method_type = "GET"
     allowed_query_params = ["offset", "limit"]
 
@@ -59,5 +89,10 @@ class GetInventoryLocations(LocationAPI):
 
 
 class UpdateInventoryLocation(LocationAPI):
+    """
+    Docs:
+    https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/updateInventoryLocation
+    """
+
     method_type = "POST"
     url_postfix = "update_location_details"
