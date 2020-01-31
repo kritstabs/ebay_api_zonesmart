@@ -3,12 +3,12 @@ from .offer import OfferAPI
 
 
 class InventoryItemGroupAPI(InventoryAPI):
-    resource = 'inventory_item_group'
+    resource = "inventory_item_group"
 
 
 class CreateOrReplaceInventoryItemGroup(InventoryItemGroupAPI):
-    method_type = 'PUT'
-    required_path_params = ['inventoryItemGroupKey']
+    method_type = "PUT"
+    required_path_params = ["inventoryItemGroupKey"]
 
     def get_success_message(self):
         return (
@@ -24,7 +24,6 @@ class CreateOrReplaceInventoryItemGroup(InventoryItemGroupAPI):
 
 
 class UpdateInventoryItemGroup(CreateOrReplaceInventoryItemGroup):
-
     def get_success_message(self):
         return (
             f"Группа товаров успешно обновлена "
@@ -39,8 +38,8 @@ class UpdateInventoryItemGroup(CreateOrReplaceInventoryItemGroup):
 
 
 class DeleteInventoryItemGroup(InventoryItemGroupAPI):
-    method_type = 'DELETE'
-    required_path_params = ['inventoryItemGroupKey']
+    method_type = "DELETE"
+    required_path_params = ["inventoryItemGroupKey"]
 
     def get_success_message(self):
         return (
@@ -56,15 +55,15 @@ class DeleteInventoryItemGroup(InventoryItemGroupAPI):
 
 
 class GetInventoryItemGroup(InventoryItemGroupAPI):
-    method_type = 'GET'
-    required_path_params = ['inventoryItemGroupKey']
+    method_type = "GET"
+    required_path_params = ["inventoryItemGroupKey"]
 
 
 class PublishOfferByInventoryItemGroup(OfferAPI):
-    method_type = 'POST'
-    url_postfix = 'publish_by_inventory_item_group'
+    method_type = "POST"
+    url_postfix = "publish_by_inventory_item_group"
 
 
 class WithdrawOfferByInventoryItemGroup(OfferAPI):
-    method_type = 'POST'
-    url_postfix = 'withdraw_by_inventory_item_group'
+    method_type = "POST"
+    url_postfix = "withdraw_by_inventory_item_group"

@@ -2,4 +2,4 @@ from ..base import SellAPI
 
 
 class FulfillmentAPI(SellAPI):
-    api_name = 'fulfillment'
+    api_name = "fulfillment"

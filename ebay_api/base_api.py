@@ -6,17 +6,14 @@ from abc import ABC, abstractmethod
 import requests
 from .data import MarketplaceToLang
 
-LOGFILE = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    'log.txt'
-)
+LOGFILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "log.txt")
 
 
 logging.basicConfig(
     level=logging.DEBUG,
     filename=LOGFILE,
     format="%(asctime)s: %(levelname)s - %(funcName)s: %(message)s",
-    filemode='w'
+    filemode="w",
 )
 
 
@@ -29,7 +26,14 @@ class EbayAPI(ABC):
     required_query_params = []
     allowed_query_params = []
 
-    def __init__(self, access_token: str, sandbox: bool, marketplace_id=None, response_timeout=42, silent: bool = True):
+    def __init__(
+        self,
+        access_token: str,
+        sandbox: bool,
+        marketplace_id: str = None,
+        response_timeout: int = 42,
+        silent: bool = True,
+    ):
         self.access_token = access_token
         self.sandbox = sandbox
         self.marketplace_id = marketplace_id
@@ -38,11 +42,11 @@ class EbayAPI(ABC):
 
     @property
     def lang(self):
-        return MarketplaceToLang.get(self.marketplace_id, MarketplaceToLang['default'])
+        return MarketplaceToLang.get(self.marketplace_id, MarketplaceToLang["default"])
 
     @property
     def api_location_domain(self):
-        return 'api'
+        return "api"
 
     @property
     def api_location(self):
@@ -63,40 +67,41 @@ class EbayAPI(ABC):
 
     @property
     def api_version(self):
-        return 'v1'
+        return "v1"
 
     @property
     @abstractmethod
     def method_type(self):
-        '''
+        """
         eBay Inventory API call method (POST/GET/PUT/DELETE)
-        '''
+        """
         pass
 
     @property
     @abstractmethod
     def resource(self):
-        '''
+        """
         eBay Inventory API resource
         (location / inventory_item / inventory_item_group /
          offer / product_compatibility / listing)
-        '''
+        """
         pass
 
     @property
     def url_path(self):
-        return '/'.join(list(self.path_params.values()))
+        return "/".join(list(self.path_params.values()))
 
     @property
     def url_postfix(self):
         pass
 
     def build_url(self):
-        '''
+        """
         Build eBay Inventory API URL
-        '''
-        return '/'.join(
-            part for part in [
+        """
+        return "/".join(
+            part
+            for part in [
                 self.api_location,
                 self.api_type_name,
                 self.api_name,
@@ -110,58 +115,70 @@ class EbayAPI(ABC):
 
     @property
     def headers(self):
-        '''
+        """
         eBay Inventory API headers
-        '''
+        """
         return {
-            'Authorization': f'Bearer {self.access_token}',
-            'Content-Language': self.lang,
-            'Content-Type': 'application/json',
-            'Accept-Language': 'ru-RU',
-            'Accept': 'application/json',
-            'Accept-Charset': 'utf-8',
-            'Accept-Encoding': 'application/gzip',
-            'X-EBAY-C-MARKETPLACE-ID': self.marketplace_id,
+            "Authorization": f"Bearer {self.access_token}",
+            "Content-Language": self.lang,
+            "Content-Type": "application/json",
+            "Accept-Language": "ru-RU",
+            "Accept": "application/json",
+            "Accept-Charset": "utf-8",
+            "Accept-Encoding": "application/gzip",
+            "X-EBAY-C-MARKETPLACE-ID": self.marketplace_id,
         }
 
     def get_clean_path_params(self, params: dict):
         for req_param in self.required_path_params:
             if (req_param not in params) or (not params[req_param]):
-                raise AttributeError(f"Обязательный параметр запроса '{req_param}' не задан.")
+                raise AttributeError(
+                    f"Обязательный параметр запроса '{req_param}' не задан."
+                )
 
         for path_param in params:
             if path_param not in self.required_path_params:
-                raise AttributeError(f"Задан лишний параметр запроса ({path_param}={params[path_param]}).")
+                raise AttributeError(
+                    f"Задан лишний параметр запроса ({path_param}={params[path_param]})."
+                )
 
         return params
 
     def get_clean_query_params(self, params: dict):
         for req_param in self.required_query_params:
             if req_param not in params:
-                raise AttributeError(f"Обязательный параметр запроса '{req_param}' не задан.")
+                raise AttributeError(
+                    f"Обязательный параметр запроса '{req_param}' не задан."
+                )
 
         for param, value in list(params.items()):
-            if (not value) or (param not in self.allowed_query_params + self.required_query_params):
-                logging.warning(f'Недопустимый параметр запроса {param}={value} не используется.')
+            if (not value) or (
+                param not in self.allowed_query_params + self.required_query_params
+            ):
+                logging.warning(
+                    f"Недопустимый параметр запроса {param}={value} не используется."
+                )
                 params.pop(param)
                 continue
 
-            clean_method = getattr(self, f'clean_{param}', None)
+            clean_method = getattr(self, f"clean_{param}", None)
             if clean_method:
-		if isinstance(value, str):
-		    value = value.strip()
+                if isinstance(value, str):
+                    value = value.strip()
                 param_is_valid, value, err_message = clean_method(value)
                 if not param_is_valid:
-                    message = f'Недопустимое значение параметра запроса ({param}={value}).\n{err_message}'
+                    message = f"Недопустимое значение параметра запроса ({param}={value}).\n{err_message}"
                     logging.error(message)
                     raise EbayAPIError(message)
 
         return params
 
-    def make_request(self, payload=None, path_params={}, query_params={}, next_url=None):
-        '''
+    def make_request(
+        self, payload=None, path_params={}, query_params={}, next_url=None
+    ):
+        """
         eBay Inventory API call
-        '''
+        """
         self.payload = payload
         self.path_params = self.get_clean_path_params(path_params)
         self.query_params = self.get_clean_query_params(query_params)
@@ -173,7 +190,7 @@ class EbayAPI(ABC):
             self.url = self.build_url()
 
         is_success = False
-        message = ''
+        message = ""
         objects = {}
         response = None
         try:
@@ -186,7 +203,7 @@ class EbayAPI(ABC):
                 timeout=self.response_timeout,
             )
         except requests.exceptions.Timeout:
-            message = f'TimeoutError (response timeout > {self.response_timeout})'
+            message = f"TimeoutError (response timeout > {self.response_timeout})"
         except requests.exceptions.RequestException as err:
             message = str(err)
         else:
@@ -201,11 +218,11 @@ class EbayAPI(ABC):
         return is_success, message, objects
 
     def response_handler(self, response):
-        '''
+        """
         Message for API call response
-        '''
+        """
         try:
-            if not str(response.status_code).startswith('2'):
+            if not str(response.status_code).startswith("2"):
                 response.raise_for_status()
         except requests.HTTPError:
             is_success = False
@@ -214,7 +231,7 @@ class EbayAPI(ABC):
             is_success = True
             message, objects = self.success_handler(response)
 
-        objects['response'] = response
+        objects["response"] = response
 
         return is_success, message, objects
 
@@ -228,7 +245,7 @@ class EbayAPI(ABC):
         message = self.get_success_message()
         try:
             objects = {
-                'results': response.json(),
+                "results": response.json(),
             }
         except json.decoder.JSONDecodeError:
             objects = {}
@@ -242,32 +259,34 @@ class EbayAPI(ABC):
         except json.decoder.JSONDecodeError:
             objects = {}
         else:
-            for error_num, error in enumerate(objects.get('errors', [])):
-                if error.get('category', ''):
-                    message += f"\n{error_num+1}) " + error.get('longMessage', error.get('message', ''))
+            for error_num, error in enumerate(objects.get("errors", [])):
+                if error.get("category", ""):
+                    message += f"\n{error_num+1}) " + error.get(
+                        "longMessage", error.get("message", "")
+                    )
 
-                    params = error.get('parameters', [])
+                    params = error.get("parameters", [])
                     if params:
-                        objects['params'] = params
+                        objects["params"] = params
         return message, objects
 
     @staticmethod
     def _clean_int(name, value, min_num, max_num):
         is_valid = True
-        message = ''
+        message = ""
         try:
             value = int(value)
         except ValueError:
-            message = f'Параметр {name} должен быть целым числом.'
+            message = f"Параметр {name} должен быть целым числом."
         if not (min_num <= value <= max_num):
-            message = f'Параметр {name} должен быть в диапазоне [{min_num}:{max_num}].'
-            message += f'\nЗначение параметра: {value}.'
+            message = f"Параметр {name} должен быть в диапазоне [{min_num}:{max_num}]."
+            message += f"\nЗначение параметра: {value}."
         if message:
             is_valid = False
         return is_valid, value, message
 
     def clean_offset(self, offset, min_num=0, max_num=99):
-        return self._clean_int('offset', offset, min_num, max_num)
+        return self._clean_int("offset", offset, min_num, max_num)
 
     def clean_limit(self, limit, min_num=1, max_num=100):
-        return self._clean_int('limit', limit, min_num, max_num)
+        return self._clean_int("limit", limit, min_num, max_num)

@@ -2,4 +2,4 @@ from ..base import SellAPI
 
 
 class MetadataAPI(SellAPI):
-    api_name = 'metadata'
+    api_name = "metadata"

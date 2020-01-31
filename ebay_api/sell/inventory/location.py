@@ -2,12 +2,12 @@ from .base import InventoryAPI
 
 
 class LocationAPI(InventoryAPI):
-    resource = 'location'
+    resource = "location"
 
 
 class CreateInventoryLocation(LocationAPI):
-    method_type = 'POST'
-    required_path_params = ['merchantLocationKey']
+    method_type = "POST"
+    required_path_params = ["merchantLocationKey"]
 
     def get_success_message(self):
         return f"Склад успешно добавлен на eBay (ID: {self.path_params['merchantLocationKey']})"
@@ -17,8 +17,8 @@ class CreateInventoryLocation(LocationAPI):
 
 
 class DeleteInventoryLocation(LocationAPI):
-    method_type = 'DELETE'
-    required_path_params = ['merchantLocationKey']
+    method_type = "DELETE"
+    required_path_params = ["merchantLocationKey"]
 
     def get_success_message(self):
         return f"Склад успешно удалён с eBay (ID: {self.path_params['merchantLocationKey']})"
@@ -28,25 +28,25 @@ class DeleteInventoryLocation(LocationAPI):
 
 
 class DisableInventoryLocation(LocationAPI):
-    method_type = 'POST'
-    url_postfix = 'disable'
-    required_path_params = ['merchantLocationKey']
+    method_type = "POST"
+    url_postfix = "disable"
+    required_path_params = ["merchantLocationKey"]
 
 
 class EnableInventoryLocation(LocationAPI):
-    method_type = 'POST'
-    url_postfix = 'enable'
-    required_path_params = ['merchantLocationKey']
+    method_type = "POST"
+    url_postfix = "enable"
+    required_path_params = ["merchantLocationKey"]
 
 
 class GetInventoryLocation(LocationAPI):
-    method_type = 'GET'
-    required_path_params = ['merchantLocationKey']
+    method_type = "GET"
+    required_path_params = ["merchantLocationKey"]
 
 
 class GetInventoryLocations(LocationAPI):
-    method_type = 'GET'
-    allowed_query_params = ['offset', 'limit']
+    method_type = "GET"
+    allowed_query_params = ["offset", "limit"]
 
     def get_success_message(self):
         return f"Все склады были успешно загружены с eBay"
@@ -59,5 +59,5 @@ class GetInventoryLocations(LocationAPI):
 
 
 class UpdateInventoryLocation(LocationAPI):
-    method_type = 'POST'
-    url_postfix = 'update_location_details'
+    method_type = "POST"
+    url_postfix = "update_location_details"
