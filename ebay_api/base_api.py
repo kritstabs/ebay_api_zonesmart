@@ -89,7 +89,7 @@ class EbayAPI(ABC):
 
     @property
     def url_path(self):
-        return "/".join(list(self.path_params.values()))
+        return "/".join(str(param) for param in self.path_params.values())
 
     @property
     def url_postfix(self):
